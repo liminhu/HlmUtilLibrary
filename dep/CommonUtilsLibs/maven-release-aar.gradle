@@ -9,7 +9,7 @@ ext {// ext is a gradle closure allowing the declaration of global properties
     println("当前引用库为："+PUBLISH_GROUP_ID+":"+PUBLISH_ARTIFACT_ID+":"+PUBLISH_VERSION)
 }
 // 3.maven-路径
-//./gradlew clean build uploadArchives
+// ./gradlew clean CommonUtilsLibs:assemblerelease  uploadArchives
 uploadArchives {
     repositories.mavenDeployer {
      //   def deployPath = file(properties.get('aar.deployPath'))
@@ -32,3 +32,6 @@ task androidSourcesJar(type: Jar) {
 artifacts {
     archives androidSourcesJar
 }
+
+
+// https://raw.githubusercontent.com/liminhu/HlmUtilsLibrary/master
