@@ -1,0 +1,46 @@
+ext.android = [
+        compileSdkVersion: 28,
+        buildToolsVersion: "28.0.3",
+        minSdkVersion    : 16,
+        targetSdkVersion : 22,
+]
+
+
+ext.dependencies = [
+        "okhttp" : "com.squareup.okhttp3:okhttp:3.12.0",
+
+       // "v4-support" : "com.android.support:support-v4:28.0.0",
+        "v7-support"    : "com.android.support:appcompat-v7:27.1.1",
+]
+
+ext{
+    println("*********************************全局参数初始化*****************************************")
+
+
+    //每个子模块定义的外部依赖库，放在这儿，方便App模块自动添加
+    deps = [
+            "TemplateDemo" : "v7-support",
+            "CommonUtilsLibs" : "v7-support,okhttp",
+    ]
+
+    def properties = new Properties();
+    properties.load(new File(getRootDir(), 'local.properties').newDataInputStream())
+    def projectProperties = properties.getProperty("config")//当前调试的app
+    if(projectProperties == null){
+        projectProperties = "properties/template.properties"
+    }
+
+    println("当前调试的app properties---->"+projectProperties)
+    properties.load(new File(getRootDir(),projectProperties).newDataInputStream())
+
+    globalParams = [
+            "aar":properties.getProperty("aar"),
+            "app":properties.getProperty("app"),
+            "groupId":"com.hlm.library",
+    ]
+
+    println("*********************************全局参数初始化*****************************************")
+}
+
+
+

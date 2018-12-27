@@ -1,0 +1,31 @@
+def Properties properties = new Properties()
+
+properties.load(new File(getRootDir(), 'local.properties').newDataInputStream())
+def projectProperties = properties.getProperty("config")//当前调试的app
+if(projectProperties == null){
+    projectProperties = "properties/template.properties"
+    println("请在项目的跟目录下的localpropeties配置config字段")
+}
+properties.load(new File(getRootDir(),projectProperties).newDataInputStream())
+
+def aarName = properties.getProperty("aar")
+def projectName = properties.getProperty("app")
+
+
+include ':'+projectName
+project(':' + projectName).projectDir = new File(settingsDir, 'app/' + projectName)
+
+
+
+if(aarName!=null && !"null".equals(aarName)){
+    include ':'+aarName
+    project(':'+aarName).projectDir = new File(settingsDir, 'dep/'+aarName)
+}else{
+    println("-----------------------------------------------------------------")
+    println("当前开发的aar为 is null ："+aarName+" ")
+}
+
+
+println("-----------------------------------------------------------------")
+println("当前开发的aar为："+aarName+" 用例projectName为："+projectName)
+println("-----------------------------------------------------------------")

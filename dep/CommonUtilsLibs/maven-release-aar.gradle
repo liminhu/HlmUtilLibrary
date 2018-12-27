@@ -1,0 +1,34 @@
+// 1.maven-插件
+apply plugin: 'maven'
+
+// 2.maven-信息
+ext {// ext is a gradle closure allowing the declaration of global properties
+    PUBLISH_GROUP_ID = rootProject.ext.globalParams["groupId"]
+    PUBLISH_ARTIFACT_ID = rootProject.ext.globalParams["aar"]
+    PUBLISH_VERSION = android.defaultConfig.versionName
+    println("当前引用库为："+PUBLISH_GROUP_ID+":"+PUBLISH_ARTIFACT_ID+":"+PUBLISH_VERSION)
+}
+// 3.maven-路径
+//./gradlew clean build uploadArchives
+uploadArchives {
+    repositories.mavenDeployer {
+     //   def deployPath = file(properties.get('aar.deployPath'))
+        def deployPath = getRootDir();//获取当前git 仓库地址
+        repository(url: "file://${deployPath.absolutePath}")
+        pom.project {
+            groupId project.PUBLISH_GROUP_ID
+            artifactId project.PUBLISH_ARTIFACT_ID
+            version project.PUBLISH_VERSION
+        }
+    }
+}
+
+//aar包内包含注释
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.sourceFiles
+}
+
+artifacts {
+    archives androidSourcesJar
+}
