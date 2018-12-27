@@ -33,5 +33,5 @@ artifacts {
     archives androidSourcesJar
 }
 
-
-// https://raw.githubusercontent.com/liminhu/HlmUtilsLibrary/master
+//maven { url "https://raw.githubusercontent.com/liminhu/HlmUtilsLibrary/master" }
+//    implementation 'com.hlm.library:CommonUtilsLibs:1.0.1'

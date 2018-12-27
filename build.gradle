@@ -8,7 +8,6 @@ buildscript {
             name 'google'
         }
         maven{ url 'https://maven.aliyun.com/repository/jcenter'}
-        google()
     }
 
     dependencies {
@@ -26,7 +25,6 @@ allprojects {
             name 'google'
         }
         maven{ url 'https://maven.aliyun.com/repository/jcenter'}
-        google()
     }
 }
 
